@@ -2,7 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Builder\ReturnApi;
+use BadMethodCallException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -46,5 +51,27 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof BadMethodCallException) {
+            return ReturnApi::error('Método errado chamado', null, 500);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            return ReturnApi::error('Rota não encontrada', null, 404);
+        }
+
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return ReturnApi::error('Método não suportado nesta rota', null, 404);
+        }
+
+        if ($exception instanceof ValidationException) {
+            return parent::render($request, $exception);
+        }
+
+        info($exception);
+        return ReturnApi::error("Erro inesperado na API", null, 500);
     }
 }

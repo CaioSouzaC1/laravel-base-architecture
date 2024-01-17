@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('/auth')->group(base_path('routes/api/auth.php'));
-Route::post("/teste", function () {
-    echo "foi";
-    return true;
+
+Route::group([], function () {
+    Route::post("/register", [AuthController::class, "register"]);
+    Route::post("/login", [AuthController::class, "login"]);
+});
+
+
+
+Route::middleware('auth.api')->group(function () {
+    Route::get("/me", [AuthController::class, "me"]);
 });
