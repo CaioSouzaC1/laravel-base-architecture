@@ -1,5 +1,7 @@
 <?php
 
+use App\Builder\ReturnApi;
+use App\Http\Controllers\TestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('/auth')->group(base_path('routes/api/auth.php'));
-Route::post("/teste", function () {
-    echo "foi";
-    return true;
+Route::get("/", function () {
+    return ReturnApi::success(["running" => true], "Running");
 });
