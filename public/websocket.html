@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>websocket</title>
+</head>
+<body style="background-color: black; color: white;">
+    <h1>websocket</h1>
+    <div id="productContainer">
+    </div>
+    <script>
+        const socket = new WebSocket('ws://localhost:6001');
+        console.log(socket);
+        socket.onopen = function(event) {
+            console.log('Conexão estabelecida com o servidor');
+        };
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            if (data.event === 'products.store') {
+                const productContainer = document.querySelector('#productContainer');
+                productContainer.innerHTML += `<div>${data.data.name}</div>`; 
+            }
+        };
+
+        socket.onerror = function(error) {
+            console.log('Erro na conexão:');
+            console.error(error);
+        };
+        socket.onclose = function(event) {
+            console.log('Conexão fechada');
+        };
+
+    </script>
+</body>
+</html>

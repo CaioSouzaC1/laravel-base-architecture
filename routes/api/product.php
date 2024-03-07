@@ -1,9 +1,6 @@
 <?php
 
-use App\Builder\ReturnApi;
-use App\Events\PlaygroundEvent;
-use App\Http\Controllers\TestController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Products\ProductsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('/auth')->group(base_path('routes/api/auth.php'));
-Route::prefix('/ws')->group(base_path('routes/api/ws.php'));
-Route::prefix('/products')->group(base_path('routes/api/product.php'));
-Route::get("/", function () {
-    return ReturnApi::success(["running" => true], "Running");
+
+Route::middleware('auth.api')->group(function () {
+    Route::post("/", [ProductsController::class, "store"]);
 });

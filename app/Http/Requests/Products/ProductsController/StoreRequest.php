@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Auth\AuthController;
+namespace App\Http\Requests\Products\ProductsController;
 
 use App\Builder\ReturnApi;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class LoginRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,23 +27,14 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email" => [
-                "email",
-                "required",
+            'name' => [
+                'required',
+                'string'
             ],
-            "password" => [
-                "string",
-                "required",
-                "min:6"
-            ],
-        ];
-    }
-
-    public function attributes(): array
-    {
-        return [
-            "email" => "e-mail",
-            "password" => "senha",
+            'price' => [
+                'required',
+                'string'
+            ]
         ];
     }
 
