@@ -10,12 +10,14 @@
     <div id="productContainer">
     </div>
     <script>
-        const socket = new WebSocket('ws://localhost:6001');
+        const socket = new WebSocket('ws://127.0.0.1:6001/app/app-key');
         console.log(socket);
         socket.onopen = function(event) {
             console.log('Conexão estabelecida com o servidor');
         };
+
         socket.onmessage = function(event) {
+            console.log(event)
             const data = JSON.parse(event.data);
             if (data.event === 'products.store') {
                 const productContainer = document.querySelector('#productContainer');
@@ -30,7 +32,6 @@
         socket.onclose = function(event) {
             console.log('Conexão fechada');
         };
-
     </script>
 </body>
 </html>
