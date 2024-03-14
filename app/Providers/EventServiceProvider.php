@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\ProductStored;
+use App\Listeners\ProcessProductStored;
 use App\Models\Product;
 use App\Observers\ProductObserver;
 use Illuminate\Auth\Events\Registered;
@@ -19,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        ProductStored::class => [
+            ProcessProductStored::class,
         ],
     ];
 

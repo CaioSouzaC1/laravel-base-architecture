@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\Products;
+namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -10,20 +10,22 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Store implements ShouldBroadcast
+class ProductStored
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $product;
+    public $productName;
+    public $productPrice;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($product)
+    public function __construct($productName, $productPrice)
     {
-        $this->product = $product;
+        $this->productName = $productName;
+        $this->productPrice = $productPrice;
     }
 
     /**
@@ -33,16 +35,6 @@ class Store implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('products.store');
-    }
-
-    public function broadcastAs()
-    {
-        return 'products.store';
-    }
-
-    public function broadcastWith()
-    {
-        return [$this->product];
+        return new PrivateChannel('channel-name');
     }
 }
