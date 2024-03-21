@@ -8,11 +8,11 @@ use Exception;
 class ApiException extends Exception
 {
 
-    protected $code = 400;
-    protected $message = "";
+    protected $code = 500;
+    protected $message = "Erro inesperado";
 
     public function render()
     {
-        return ReturnApi::error($this->message, $status = $this->code);
+        return ReturnApi::error(message:$this->message, status:$this->code);
     }
 }

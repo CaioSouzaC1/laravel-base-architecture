@@ -10,7 +10,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class JwtMiddleware
 {
-    /**
+   /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request

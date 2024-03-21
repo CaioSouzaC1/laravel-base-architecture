@@ -2,6 +2,7 @@
 
 namespace App\Services\Auth;
 
+use App\Exceptions\ApiException;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,7 @@ class AuthService
 {
     public function register($data)
     {
+        
         return User::create(
             [
                 "name" => $data["name"],
@@ -22,15 +24,16 @@ class AuthService
 
     public function login($data)
     {
-
         if (Auth::attempt(["email" => $data["email"], "password" => $data["password"]])) {
             $token = JWTAuth::fromUser(Auth::user());
             return ["user" => Auth::user(), "token" => $token];
         }
+        throw new ApiException("Usuário não encontrado");
     }
 
     public function me()
     {
+        if(!JWTAuth::user()) throw new ApiException("Usuário não encontrado");
         return JWTAuth::user();
     }
 }

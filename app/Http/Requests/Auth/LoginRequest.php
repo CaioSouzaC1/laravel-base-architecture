@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Http\Requests\Auth\AuthController;
+namespace App\Http\Requests\Auth;
 
-use App\Builder\ReturnApi;
-use Illuminate\Contracts\Validation\Validator;
+use App\Traits\BasicFormRequestValidation;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\ValidationException;
 
-class RegisterRequest extends FormRequest
+
+class LoginRequest extends FormRequest
 {
+
+    use BasicFormRequestValidation;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -27,36 +29,23 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => [
-                "string",
-                "required",
-                "min:6"
-            ],
             "email" => [
                 "email",
                 "required",
-                "unique:users,email"
             ],
             "password" => [
                 "string",
                 "required",
                 "min:6"
-            ]
-
+            ],
         ];
     }
 
     public function attributes(): array
     {
         return [
-            "name" => "nome",
             "email" => "e-mail",
-            "password" => "senha"
+            "password" => "senha",
         ];
-    }
-
-    public function failedValidation(Validator $validator)
-    {
-        throw new ValidationException($validator, ReturnApi::error($validator->errors()->first(), $validator->errors()->toArray()));
     }
 }
