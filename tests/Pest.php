@@ -1,5 +1,7 @@
 <?php
 
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,7 +13,10 @@
 |
 */
 
-// uses(Tests\TestCase::class)->in('Feature');
+uses(
+    TestCase::class,
+    RefreshDatabase::class,
+)->in('Feature', 'Unit');
 
 /*
 |--------------------------------------------------------------------------
