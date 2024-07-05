@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Builder\ReturnApi;
 use App\Exceptions\ApiException;
-use App\Exceptions\ApiExeception;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -36,7 +35,6 @@ class AuthController extends Controller
                 $e->getCode()
             );
         }
-
     }
 
     public function login(LoginRequest $request)
